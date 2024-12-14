@@ -1,0 +1,9 @@
+[
+  {
+    "instruction": "",
+    "input": "python connect mysql denied password",
+    "output": "",
+    "rule": [],
+    "self_induction": "无相关指控信息，该查询似乎与数据库连接错误相关，而非犯罪行为。请提供更详细的信息以便进一步帮助。"
+  }
+]
