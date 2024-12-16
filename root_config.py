@@ -8,8 +8,13 @@ class RootConfig:
     tempPipeLineKnowledgeCatch = []
     
     # ---------------------------------- The following configurations need to be modified -----------------------------------
-    # Absolute path of the project.
-    root_path = os.path.dirname(os.path.abspath(__file__))
+    
+    # 1. Absolute path of the project(default: the path where the project is located).
+    # root_path = os.path.dirname(os.path.abspath(__file__)) 
+    
+    # 2. If you start with Docker, the path is this.
+    root_path = "/app/KMatrix_v2"
+    
     print("--------------root_path-------------\n",root_path)
     
     if not root_path.endswith("/"):
