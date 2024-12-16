@@ -96,11 +96,6 @@ To get started with KMatrix2, simply clone it from Github and install (requires 
     $ python flask_server.py
     Visit KMatrix2 toolkit using the browser: http://yourserverip:8010
 
-### 2. Quick Start from Docker
-
-`````
-Upcoming integration ...
-`````
 
 
 
