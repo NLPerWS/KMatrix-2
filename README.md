@@ -145,6 +145,7 @@ We can easily create descriptive and procedural knowledge bases, including Text,
 <img src="images/deploy1.png" style="zoom:60%;" />
 
 ​	3. Task Management and Evaluation 
+   
    Task Management and Evaluation is used for constructing, managing and executing evaluation tasks for the K-LLMs system, and the interface of Task Management and Evaluation is shown in the picture below. Users can:
    
    1) Construct evaluation task: create evaluation task, select evaluation dataset & K-LLMs system.
