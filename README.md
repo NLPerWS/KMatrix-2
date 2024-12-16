@@ -112,7 +112,7 @@ To get started with KMatrix2, simply clone it from Github and install (requires 
 
 ​	1. Knowledge Base Management 
    
-   Knowledge Base Management provides efficient heterogeneous descriptive and procedural knowledge access and management services, and the interface of Knowledge Base Management is shown in picture. 
+   Knowledge Base Management provides efficient heterogeneous descriptive and procedural knowledge access and management services, and the interface of Knowledge Base Management is shown in the picture below. 
 
 <img src="images/deploy_knowledge.png" style="zoom:70%;" />
 
@@ -140,12 +140,12 @@ We can easily create descriptive and procedural knowledge bases, including Text,
   <img src="images/deploy3.png" alt="Image 2" style="zoom:50%;"/>
 </div>
 
-   After that, we can deploy the K-LLMs system and interact with it. and the interface of System(Loop K-LLMs) Deployment and Interaction is shown in picture. 
+   After that, we can deploy the K-LLMs system and interact with it. and the interface of System(Loop K-LLMs) Deployment and Interaction is shown in the picture below. 
 
 <img src="images/deploy1.png" style="zoom:60%;" />
 
 ​	3. Task Management and Evaluation 
-   Task Management and Evaluation is used for constructing, managing and executing evaluation tasks for the K-LLMs system, and the interface of Task Management and Evaluation is shown in picture. Users can:
+   Task Management and Evaluation is used for constructing, managing and executing evaluation tasks for the K-LLMs system, and the interface of Task Management and Evaluation is shown in the picture below. Users can:
    
    1) Construct evaluation task: create evaluation task, select evaluation dataset & K-LLMs system.
    2) Executing evaluation task: After constructing evaluation task, we can run the evaluation task, and the evaluation results will be presented.
