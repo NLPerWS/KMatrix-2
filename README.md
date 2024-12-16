@@ -100,18 +100,15 @@ To get started with KMatrix2, simply clone it from Github and install (requires 
 
 ## :dizzy: Toolkit Usage
 
-​KMatrix-2 is an open-source toolkit that supports comprehensive heterogeneous knowledge collaborative enhancement for Large Language Models(K-LLMs). We inherit the main framework of KMatrix, but place it in the background to hide K-LLMs design details. A rich of modular components (like Retrievers, Generators, Conflict Resolver, etc) and several typical enhancement patterns (such as loop and adaptive patterns) are encapsulated, and can be combined to conveniently construct mainstream heterogeneous K-LLMs systems. 
+KMatrix-2 is an open-source toolkit that supports comprehensive heterogeneous knowledge collaborative enhancement for Large Language Models(K-LLMs). We inherit the main framework of KMatrix, but place it in the background to hide K-LLMs design details. A rich of modular components (like Retrievers, Generators, Conflict Resolver, etc) and several typical enhancement patterns (such as loop and adaptive patterns) are encapsulated, and can be combined to conveniently construct mainstream heterogeneous K-LLMs systems. 
 
-​Our toolkit consists of three sections: Knowledge Base Management, System Design and Interaction, and Task Management and Evaluation. The screencast video of our toolkit are available at [here](https://youtu.be/E7hk-jrM2CY), which introduces the detailed instructions for using KMatrix-2.
-
+Our toolkit consists of three sections: Knowledge Base Management, System Design and Interaction, and Task Management and Evaluation. ***The screencast video of our toolkit are available at [here](https://youtu.be/E7hk-jrM2CY)***, which introduces the detailed instructions for using KMatrix-2.
 <video width="85%" height="500" controls>
   <source src="images/kmatrix2_v2.mp4" type="video/mp4">
 </video>
 
-​	
+### Knowledge Base Management 
 
-​	1. Knowledge Base Management 
-   
    Knowledge Base Management provides efficient heterogeneous descriptive and procedural knowledge access and management services, and the interface of Knowledge Base Management is shown in the picture below. 
 
 <img src="images/deploy_knowledge.png" style="zoom:70%;" />
@@ -120,17 +117,17 @@ To get started with KMatrix2, simply clone it from Github and install (requires 
 
 We can easily create descriptive and procedural knowledge bases, including Text, Table, Knowledge Graph, Rule and Code. And upload corresponding knowledge files (like PDF, WORD, Rule JSON, etc.) or databases (like SQLite, Neo4j, GraphDB, etc). All knowledge bases we create will be uniformly managed, and users can easily search and modify the information in the knowledge bases.
 
-​	2. System Design and Interaction 
+### System Design and Interaction 
 
    System Design and Interaction supports the construction, deployment, and user interaction of the K-LLMs system. The interface of System Construction is shown in picture.
    We offer a rich selection of modular components and several typical enhancement patterns to support convenient construction of mainstream heterogeneous K-LLMs systems. We can construct K-LLMs system by: 
-   
+
    1) Selecting knowledge enhancement pattern, including: Naive, Loop, Adaptive and Iterative;
    2) Selecting knowledge source;
    3) Selecting retriever and configuring parameters;
    4) Selecting knowledge conflict resolution strategy;
    5) Selecting generator and configuring parameters.
-   
+
    KMatrix-2 automatically matches the corresponding Knowledge Integrator (Unified Verbalizer and Unified Querier) based on the selected knowledge bases, without the need for manual selection by users.
 
    
@@ -144,10 +141,10 @@ We can easily create descriptive and procedural knowledge bases, including Text,
 
 <img src="images/deploy1.png" style="zoom:60%;" />
 
-​	3. Task Management and Evaluation 
-   
+### Task Management and Evaluation 
+
    Task Management and Evaluation is used for constructing, managing and executing evaluation tasks for the K-LLMs system, and the interface of Task Management and Evaluation is shown in the picture below. Users can:
-   
+
    1) Construct evaluation task: create evaluation task, select evaluation dataset & K-LLMs system.
    2) Executing evaluation task: After constructing evaluation task, we can run the evaluation task, and the evaluation results will be presented.
    3) Managing evaluation task: View the evaluation task execution progress, abort or delete the evaluation task.
