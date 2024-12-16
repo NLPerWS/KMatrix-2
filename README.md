@@ -156,7 +156,7 @@ We can easily create descriptive and procedural knowledge bases, including Text,
 
 ##  :notebook: Knowledge And Datasets
 
-**Knowledge**:  
+**Heterogeneous descriptive and procedural knowledge used in KMatrix-2 evaluation**:  
 
 |    Knowledge Type     |    Knowledge Name    | Knowledge Scale |
 | :-------------------: | :------------------: | :-------------: |
@@ -168,7 +168,7 @@ We can easily create descriptive and procedural knowledge bases, including Text,
 
 
 
-**Dataset**:  
+**Evaluation datasets selectd by KMatrix-2**:  
 
 |  Dataset Type  | Dataset Name | Dataset Scale |
 | :------------: | :----------: | :-----------: |
