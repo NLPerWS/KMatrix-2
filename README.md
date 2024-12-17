@@ -156,11 +156,8 @@ We can easily create descriptive and procedural knowledge bases, including Text,
    KMatrix-2 automatically matches the corresponding Knowledge Integrator (Unified Verbalizer and Unified Querier) based on the selected knowledge bases, without the need for manual selection by users.
 
    
+<img src="images/deploy2-3.png" style="zoom:50%;"/>
 
-<div style="display: flex; justify-content: space-between;">
-  <img src="images/deploy2.png" alt="Image 1" style="zoom:50%;"/>
-  <img src="images/deploy3.png" alt="Image 2" style="zoom:50%;"/>
-</div>
 
    After that, we can deploy the K-LLMs system and interact with it. and the interface of System(Loop K-LLMs) Deployment and Interaction is shown in the picture below. 
 
