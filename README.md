@@ -96,6 +96,32 @@ To get started with KMatrix2, simply clone it from Github and install (requires 
     Visit KMatrix2 toolkit using the browser: http://yourserverip:8010
 
 
+###  2. Quick Start from Docker (recommended)
+
+``` 
+$ git clone https://github.com/NLPerWS/KMatrix-2.git
+$ chmod +x -R KMatrix-2
+Set configurations that needs to be modified in the root_config.py
+Set the baseURL in font_kmatrix2/src/axios/index.js to the IP address of deployment server.
+
+
+# Install ES database using Docker
+$ docker pull elasticsearch:8.11.1
+$ docker run -idt  \
+    -p 9200:9200 -p 9300:9300 \
+    -e "discovery.type=single-node" \
+    -e "ES_JAVA_OPTS=-Xms512m -Xmx512m" \
+    -e "xpack.security.enabled=true" \
+    -e "xpack.security.enrollment.enabled=true" \
+    -e "ELASTIC_PASSWORD=yourpassword" \
+    -v $(pwd)/elasticsearch_data:/usr/share/elasticsearch/data \
+    -v $(pwd)/esplugins:/usr/share/elasticsearch/plugins \
+    --name elasticsearch elasticsearch:8.11.1
+
+$ docker pull leap233/kmatrix2:v1
+$ cd KMatrix-2
+$ sh docker_start.sh	
+```
 
 ## :dizzy: Toolkit Usage
 
