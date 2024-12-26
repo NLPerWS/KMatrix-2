@@ -159,7 +159,7 @@ We can easily create descriptive and procedural knowledge bases, including Text,
 <img src="images/deploy2-3.png" style="zoom:50%;"/>
 
 
-   After that, we can deploy the K-LLMs system and interact with it. and the interface of System(Loop K-LLMs) Deployment and Interaction is shown in the picture below. 
+   After that, we can deploy the K-LLMs system and interact with it. The interface of System(Loop K-LLMs) Deployment and Interaction is shown in the picture below. 
 
 <img src="images/deploy1.png" style="zoom:60%;" />
 
