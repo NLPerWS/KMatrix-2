@@ -19,7 +19,7 @@ We present KMatrix-2, an open-source toolkit that supports comprehensive heterog
 
    
 
-![image](images/manage.png)
+![image](images/manage2.png)
 
 
 
