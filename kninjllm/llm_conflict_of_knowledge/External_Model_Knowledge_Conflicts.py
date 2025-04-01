@@ -2,9 +2,13 @@ import json
 from kninjllm.llm_generator.close_generator.openai_generator import OpenAIGenerator
 from root_config import RootConfig
 
+# 废弃
 class ExternalModelKnowledgeConflicts:
-    def __init__(self):
-      self.open_ai = OpenAIGenerator(api_key=RootConfig.openai_api_key,do_log=False)
+    def __init__(self,llm=None):
+        if llm != None:
+            self.llm = llm
+        else:
+            self.llm = OpenAIGenerator(api_key=RootConfig.openai_api_key,generation_kwargs={"temperature":0},do_log=False)
       
       
     def execute(self,prompt,function_str):

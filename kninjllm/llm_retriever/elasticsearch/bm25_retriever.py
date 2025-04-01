@@ -44,7 +44,7 @@ class ElasticsearchBM25Retriever:
 
     def setKnowledge(self,searchDataList,knowledge_path):
         if self._document_store == None:
-            self._document_store = ElasticsearchDocumentStore(hosts = RootConfig.ES_HOST,index=knowledge_path,basic_auth=(RootConfig.ES_USERNAME,RootConfig.ES_PASSWORD))
+            raise Exception("document_store is None")
     @component.output_types(final_result=List[List[Dict[str,Any]]])
     def run(
         self,

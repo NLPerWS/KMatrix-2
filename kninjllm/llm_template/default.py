@@ -43,6 +43,11 @@ class defaultTemplate:
         
         # print('-------------------------final_prompt_list---------------------------\n',final_prompt_list)
         
+        # # 知识冲突消解 待定
+        # from kninjllm.llm_conflict_of_knowledge.KnowledgeConflicts import KnowledgeConflicts
+        # conflicts = KnowledgeConflicts()
+        # conflicts.run(conflict_type="CM",conflict_method="coiecd",data_list=final_prompt_list)
+        
         llm_res_list = self.generator.run(prompt_list=final_prompt_list)['final_result']
         
         final_list = []

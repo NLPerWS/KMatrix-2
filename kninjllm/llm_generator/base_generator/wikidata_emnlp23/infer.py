@@ -10,12 +10,12 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 from root_config import RootConfig
 from kninjllm.llm_utils.common_utils import loadModelByCatch
 
-from kninjllm.llm_generator.base_generator.wikidata_emnlp23.utils import get_query_sparql,natural_to_sparql,get_es_clent,insert_one_to_es,delete_many_by_es,find_one_by_es,find_by_es
+from kninjllm.llm_generator.base_generator.wikidata_emnlp23.utils import get_query_sparql,natural_to_sparql,get_es_client,insert_one_to_es,delete_many_by_es,find_one_by_es,find_by_es
 from kninjllm.llm_generator.base_generator.wikidata_emnlp23.mention_heuristics import location_search
 
 
 # ES index
-client = get_es_clent()
+client = get_es_client()
 name_to_pid_mapping = "name_to_pid_mapping"
 qid_name_mapping = "name_to_qid_mapping"
 
@@ -268,8 +268,9 @@ def execute_predicted_sparql_new(sparql):
 
 
 def e2esparql_generate_flask(query):
-
-    Refined_model = loadModelByCatch(model_name='NED',model_path=RootConfig.NED_model_path)
+    loadModel = loadModelByCatch(model_name='NED',model_path=RootConfig.NED_model_path)
+    Refined_model = loadModel['model']
+        
     print("Refined_model load success!!!")
 
     pid_mapping_list=do_ned_for_dev_new(query,Refined_model)

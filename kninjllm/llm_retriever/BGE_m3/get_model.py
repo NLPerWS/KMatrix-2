@@ -26,8 +26,9 @@ class DenseEncoder(torch.nn.Module):
             kwargs['torch_dtype'] = torch.bfloat16
         elif args.dtype == 'fp16':
             kwargs['torch_dtype'] = torch.float16
-        
+        print("------BGEM3-------")
         print(f"Model kwargs: {kwargs}")
+        
         if not args.T5:
             self.encoder = AutoModel.from_pretrained(**kwargs)
         else:

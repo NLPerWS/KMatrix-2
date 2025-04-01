@@ -11,11 +11,17 @@ from flask_cors import *
 import shutil
 from typing import Any, Dict, List, Optional
 import gc
-import ray
 import torch
 import pyarrow.parquet as pq
 import pandas as pd
 from kninjllm.llm_utils.common_utils import loadRetriever,loadGenerator,loadKnowledgeByCatch,read_server_files,EmbeddingByRetriever,do_initCatch
+
+import ray
+ray.init(
+    num_gpus=torch.cuda.device_count(),
+    ignore_reinit_error=True,
+    include_dashboard=False  # 禁用不需要的仪表盘服务
+)
 
 class Kninjllm_Flask:
     
@@ -77,6 +83,12 @@ class Kninjllm_Flask:
         @self.app.get('/initCatch')
         def initCatch():
             do_initCatch(clean_knowledge=True,clean_model=True)
+            ray.init(
+                num_gpus=torch.cuda.device_count(),
+                ignore_reinit_error=True,
+                include_dashboard=False  # 禁用不需要的仪表盘服务
+            )
+                        
             return jsonify({"data": "ok", "code": 200})   
             
             
@@ -213,6 +225,11 @@ class Kninjllm_Flask:
                         {
                             "value":"onlineDB",
                             "label":"onlineDB",
+                            "acceptType":""
+                        },
+                        {
+                            "value":"ESDB",
+                            "label":"ESDB",
                             "acceptType":""
                         }
                     ]
@@ -470,6 +487,11 @@ class Kninjllm_Flask:
                             "label":"SPARQLParser/Parser",
                             "value":"SPARQLParser/Parser"
                         })
+                    elif dbInfo[1] == "ESDB":
+                        data.append({
+                            "label":"ESParser/Parser",
+                            "value":"ESParser/Parser"
+                        })
                     elif dbInfo[1] == "MysqlDB":
                         data.append({
                             "label":"SqlParser/Parser",
@@ -508,6 +530,10 @@ class Kninjllm_Flask:
                         "value":"BGE/TEXT"
                     })
                     data.append({
+                        "label":"BGEM3/TEXT",
+                        "value":"BGEM3/TEXT"
+                    })
+                    data.append({
                         "label":"E5/TEXT",
                         "value":"E5/TEXT"
                     })
@@ -528,7 +554,7 @@ class Kninjllm_Flask:
         # 获取生成器列表
         @self.app.get('/getLlmDataList')
         def getLlmDataList():
-            data = ['ChatGPT','Baichuan2','LLama2','selfRag']
+            data = ['ChatGPT','Baichuan2','LLama2','selfRag','QWQ']
             return jsonify({"data": data, "code": 200})
             
         # 获取任务数据
@@ -849,6 +875,12 @@ class Kninjllm_Flask:
                             parser = "SPARQLParser/Parser"
                         interface = InterfaceExecute(domain=info['infoName'],type='graphdb',url=add_url,parser=parser,tables=tables)
                         
+                    elif info['infoType'][1] == "ESDB":
+                        if "ESParser/Parser" in parser_list:
+                            parser = "ESParser/Parser"
+                        interface = InterfaceExecute(domain=info['infoName'],type='es',url=add_url,parser=parser,tables=tables)
+                        
+                        
                     elif info['infoType'][1] == "Neo4jDB":
                         if "CQLParser/Parser" in parser_list:
                             parser = "CQLParser/Parser"
@@ -872,7 +904,7 @@ class Kninjllm_Flask:
                         this_interface_config[domain_0] = {}
                         this_interface_config[domain_0][domain_1] = interface
                         
-                print('-----------------------------------this_interface_config---------------------------------------\n',this_interface_config)
+                # print('-----------------------------------this_interface_config---------------------------------------\n',this_interface_config)
                 retriever = InterfaceRetriever(searchDataList=this_interface_config,top_k=templateInfo['retrieverModelInfo']['topk'],ExternalKnowledgeConflictsFlag=templateInfo['knowledgeDiffSwitch'])
                 retriever_list.append(retriever)
             

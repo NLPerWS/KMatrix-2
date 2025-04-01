@@ -60,10 +60,15 @@ class DenseSearcher:
         
         print("------------self.model_name-------------\n",self.model_name)
         # self.model = AutoModel.from_pretrained(self.model_name, torch_dtype=torch.float16, trust_remote_code=True)
-        self.model = loadModelByCatch(model_name=self.model_name,model_path=self.model_name)
+        # self.model = loadModelByCatch(model_name=self.model_name,model_path=self.model_name)
+        # self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
+        
+        loadModel = loadModelByCatch(model_name=self.model_name,model_path=self.model_name)
+        self.model = loadModel['model']
+        self.tokenizer = loadModel['tokenizer']
+        
         
         self.index_dir = index_dir   
-        self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.model = self.model.to(self.device)
         self.model.eval()

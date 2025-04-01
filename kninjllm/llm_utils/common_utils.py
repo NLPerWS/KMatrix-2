@@ -17,18 +17,18 @@ from root_config import RootConfig
 
 from kninjllm.llm_retriever.contriever.generate_passage_embeddings import main_do_embedding as do_contriever_embedding
 from kninjllm.llm_retriever.BGE.embedding import embedding as do_BGE_embedding
-# from kninjllm.llm_retriever.BGE_m3.embedding import embedding as do_BGE_embedding
+from kninjllm.llm_retriever.BGE_m3.embedding import embedding as do_BGEM3_embedding
 from kninjllm.llm_retriever.DPR.embedding import embedding as do_DPR_embedding
 from kninjllm.llm_retriever.E5.embedding import embedding as do_E5_embedding
 from kninjllm.llm_retriever.BERT.embedding import embedding as do_BERT_embedding
 
 # from kninjllm.llm_retriever.in_memory.bm25_retriever import do_BM25_embedding as do_BM25_embedding
-
+from kninjllm.llm_utils.file_parser.deepdoc.parser.parser_main import parser_main,get_file_extension
 
 
 import torch
 from transformers import AutoTokenizer, AutoModel
-from transformers import AutoModelForCausalLM, AutoTokenizer
+from transformers import AutoModelForCausalLM, AutoTokenizer,LlamaForCausalLM
 from transformers.generation.utils import GenerationConfig
 from vllm import RequestOutput, SamplingParams,LLM
 from refined.inference.processor import Refined
@@ -224,15 +224,23 @@ def read_server_files(path,do_liner=True,know_flag=""):
                     
         # 表格 线性化器
         elif file_path.endswith(".xlsx") or file_path.endswith(".xls"):
-            table_list = changeExcelToJson(file_path,'column')
-            # print("table_list\n",table_list)
-            if do_liner == True:
-                lt = LinearizerToText(knowledge_line_count=1,max_length=100,valueList=[],count=0)
-                liner_data_list = lt.run(value=table_list)['final_result']['knowledge']
-                data.extend(liner_data_list)
-            else:
-                data.extend(table_list) 
-                    
+            
+            # deepdoc
+            string_list = parser_main(file_path=file_path, file_type='xlsx') 
+            string_list = [line.strip() for line in string_list if line.strip()]
+            data = list(map(lambda x: {"id": get_random_id_from_string(x), "content": x}, string_list))
+            
+            # 线性化器            
+            # table_list = changeExcelToJson(file_path,'column')
+            # # print("table_list\n",table_list)
+            # if do_liner == True:
+            #     lt = LinearizerToText(knowledge_line_count=1,max_length=100,valueList=[],count=0)
+            #     liner_data_list = lt.run(value=table_list)['final_result']['knowledge']
+            #     data.extend(liner_data_list)
+            # else:
+            #     data.extend(table_list) 
+            
+                
         elif file_path.endswith(".jsonl"):
             with open(file_path, 'r',encoding='utf-8') as file:
                 for line in file:
@@ -253,7 +261,7 @@ def read_server_files(path,do_liner=True,know_flag=""):
             data = list(map(lambda x: {"id": get_random_id_from_string(x), "content": x[1]}, lines))
             
         # 文本
-        elif file_path.endswith(".txt") or file_path.endswith(".md") or file_path.endswith(".doc") or file_path.endswith(".docx") or file_path.endswith(".pdf"):
+        elif file_path.endswith(".txt") :
             split_list = ['。','！','？','.','!','?']
             split_max_length = 200
             file_name, file_extension = os.path.splitext(file_path)
@@ -277,45 +285,66 @@ def read_server_files(path,do_liner=True,know_flag=""):
                 else:
                     return strings
             
-            elif file_extension in ['.txt']:
-                # 处理文本文件
+            else:
                 with open(file_path, 'r', encoding='utf-8') as file:
                     string_list = file.readlines()
+                string_list = [line.strip() for line in string_list if line.strip()]
+                data = list(map(lambda x: {"id": get_random_id_from_string(x), "content": x}, string_list))
                 
-            elif file_extension in ['.md']:
-                # 处理文本文件
-                with open(file_path, 'r', encoding='utf-8') as file:
-                    string = file.read()
-                string_list = split_string(string,split_list,split_max_length)
-                
-            elif file_extension in ['.docx','doc']:
-                # 处理 .docx 文件
-                string = ""
-                doc = Document(file_path)
-                for para in doc.paragraphs:
-                    string += para.text + "\n"  # 添加段落文本并换行
-                string_list = split_string(string,split_list,split_max_length)
-                
-            elif file_extension in ['.pdf']:
-                # 处理 .pdf 文件
-                string = ""
-                with open(file_path, 'rb') as file:
-                    reader = PyPDF2.PdfReader(file)
-                    for page in reader.pages:
-                        string += page.extract_text() + "\n"  # 添加页面文本并换行
-                    string_list = split_string(string,split_list,split_max_length)
-            else:
-                string_list = []
-                print(f"Unsupported file type: {file_extension}")
+        elif file_path.endswith(".md") or file_path.endswith(".markdown"):
+            # 使用 deepdoc_parser
+            string_list = parser_main(file_path=file_path, file_type='md') 
+            string_list = [line.strip() for line in string_list if line.strip()]
+            data = list(map(lambda x: {"id": get_random_id_from_string(x), "content": x}, string_list))
+        
+            # # 处理文本文件
+            # with open(file_path, 'r', encoding='utf-8') as file:
+            #     string = file.read()
+            # string_list = split_string(string,split_list,split_max_length)
             
-            # 去除每行末尾的换行符
+        elif file_path.endswith(".doc") or file_path.endswith(".docx"):
+            # 使用 deepdoc_parser
+            string_list = parser_main(file_path=file_path, file_type='doc') 
+            string_list = [line.strip() for line in string_list if line.strip()]
+            data = list(map(lambda x: {"id": get_random_id_from_string(x), "content": x}, string_list))
+            
+            # # 处理 .docx 文件
+            # string = ""
+            # doc = Document(file_path)
+            # for para in doc.paragraphs:
+            #     string += para.text + "\n"  # 添加段落文本并换行
+            # string_list = split_string(string,split_list,split_max_length)
+            
+        elif file_path.endswith(".pdf"):
+            # 使用 deepdoc_parser
+            string_list = parser_main(file_path=file_path, file_type='pdf') 
+            string_list = [line.strip() for line in string_list if line.strip()]
+            data = list(map(lambda x: {"id": get_random_id_from_string(x), "content": x}, string_list))
+        
+            # # 处理 .pdf 文件
+            # string = ""
+            # with open(file_path, 'rb') as file:
+            #     reader = PyPDF2.PdfReader(file)
+            #     for page in reader.pages:
+            #         string += page.extract_text() + "\n"  # 添加页面文本并换行
+            #     string_list = split_string(string,split_list,split_max_length)
+            
+        elif file_path.endswith(".html"):
+            # 使用 deepdoc_parser
+            string_list = parser_main(file_path=file_path, file_type='html') 
+            string_list = [line.strip() for line in string_list if line.strip()]
+            data = list(map(lambda x: {"id": get_random_id_from_string(x), "content": x}, string_list))
+            
+        elif file_path.endswith(".ppt") or file_path.endswith(".pptx"):
+            # 使用 deepdoc_parser
+            string_list = parser_main(file_path=file_path, file_type='ppt') 
             string_list = [line.strip() for line in string_list if line.strip()]
             data = list(map(lambda x: {"id": get_random_id_from_string(x), "content": x}, string_list))
         
         # 其他格式暂不支持
         else:
             data = []
-            print(f"Unsupported file type: {file_extension}")
+            print(f"Unsupported file type: {file_path}")
             
         return data
     
@@ -334,11 +363,12 @@ def read_server_files(path,do_liner=True,know_flag=""):
         final_data_list.extend(data)
         # print("final_data_list\n",final_data_list)
         
-        
-        
     else:
         raise ValueError(f"Path is not a folder or file or path does not exist: {path}")
 
+    # 过滤 不符合格式的数据 
+    if do_liner:
+        final_data_list = [item for item in final_data_list if 'content' in item]
     return final_data_list
 
 # 根据字符串获取随机id(str)
@@ -491,6 +521,7 @@ def knowledge_conflict_check(query_list,final_result,ExternalKnowledgeConflictsF
 
 def loadRetriever(searchDataList,retrieverName,topk,ExternalKnowledgeConflictsFlag):
     from kninjllm.llm_retriever.BGE.BGE_retriever import BGE_Retriever
+    from kninjllm.llm_retriever.BGE_m3.BGE_retriever import BGEM3_Retriever
     from kninjllm.llm_retriever.BERT.BERT_retriever import BERT_Retriever
     from kninjllm.llm_retriever.contriever.Contriever_retriever import Contriever_Retriever
     from kninjllm.llm_retriever.DPR.DPR_retriever import DPR_Retriever
@@ -507,6 +538,10 @@ def loadRetriever(searchDataList,retrieverName,topk,ExternalKnowledgeConflictsFl
     if retrieverName == "BGE":
         model_path = RootConfig.BGE_model_path
         retriever = BGE_Retriever(searchDataList=searchDataList,top_k=topk,model_path=model_path,ExternalKnowledgeConflictsFlag=ExternalKnowledgeConflictsFlag)
+        
+    elif retrieverName == "BGEM3":
+        model_path = RootConfig.BGEm3_model_path
+        retriever = BGEM3_Retriever(searchDataList=searchDataList,top_k=topk,model_path=model_path,ExternalKnowledgeConflictsFlag=ExternalKnowledgeConflictsFlag)
         
     elif retrieverName == "contriever":
         model_path = RootConfig.contriever_model_path
@@ -562,6 +597,7 @@ def loadGenerator(generatorName,generation_kwargs,knowledgeDiffFuntion):
     from kninjllm.llm_generator.base_generator.baichuan2.component_generator_baichuan2 import Baichuan2Generator
     from kninjllm.llm_generator.base_generator.llama2.component_generator_llama2 import LLama2Generator
     from kninjllm.llm_generator.base_generator.self_rag.self_rag_generator import RagGenerator
+    from kninjllm.llm_generator.base_generator.qwq.component_generator_qwq32b import QWQGenerator
     
     if generatorName == "ChatGPT":
         generator = OpenAIGenerator(api_key=RootConfig.openai_api_key,generation_kwargs=generation_kwargs,knowledgeDiffFuntion=knowledgeDiffFuntion)
@@ -569,7 +605,11 @@ def loadGenerator(generatorName,generation_kwargs,knowledgeDiffFuntion):
     elif generatorName == "Baichuan2":
         model_path = RootConfig.baichuan2_model_path
         generator = Baichuan2Generator(model_path=model_path,generation_kwargs=generation_kwargs,knowledgeDiffFuntion=knowledgeDiffFuntion)
-        
+    
+    elif generatorName == "QWQ":
+        model_path = RootConfig.QWQ_model_path
+        generator = QWQGenerator(model_path=model_path,generation_kwargs=generation_kwargs,knowledgeDiffFuntion=knowledgeDiffFuntion)
+    
     elif generatorName == "LLama2":
         model_path = RootConfig.llama2_model_path
         generator = LLama2Generator(model_path=model_path,generation_kwargs=generation_kwargs,knowledgeDiffFuntion=knowledgeDiffFuntion)
@@ -577,7 +617,7 @@ def loadGenerator(generatorName,generation_kwargs,knowledgeDiffFuntion):
     elif generatorName == "selfRag":
         model_path = RootConfig.selfRAG_model_path
         generator = RagGenerator(model_path=model_path,generation_kwargs=generation_kwargs,knowledgeDiffFuntion=knowledgeDiffFuntion)
-                                 
+         
     else:
         raise ValueError(f"Unsupported model types...")
     
@@ -585,6 +625,8 @@ def loadGenerator(generatorName,generation_kwargs,knowledgeDiffFuntion):
 
 
 def loadModelByCatch(model_name,model_path=""):
+
+    print(f"-------LOAD : {model_name} ---- {model_path}  --------")
 
     # 自动获取model_path
     if model_name == "selfrag":
@@ -595,6 +637,9 @@ def loadModelByCatch(model_name,model_path=""):
     
     elif model_name == "baichuan2":
         model_path = RootConfig.baichuan2_model_path
+        
+    elif model_name == "qwq":
+        model_path = RootConfig.QWQ_model_path
         
     elif model_name == "NED":
         model_path = RootConfig.NED_model_path
@@ -608,110 +653,147 @@ def loadModelByCatch(model_name,model_path=""):
     else:
         pass
 
-
-    while True:
-        catchData = None
-        catch_flag = False
-        for catchDataObj in RootConfig.tempModelCatch:
-            if catchDataObj['path'] == model_path:
-                print("找到模型缓存...\n",model_path)
-                catch_flag = True
-                break
-        
-        if catch_flag == True:
+    catchData = None
+    catch_flag = False
+    for catchDataObj in RootConfig.tempModelCatch:
+        if catchDataObj['path'] == model_path:
+            print("找到模型缓存...\n",model_path)
+            catch_flag = True
             break
-        else:
-            print("------------load model path :----,\n",model_path)
-            set_proxy()
-            try:
-                if model_name == "selfrag":
-                    model = LLM(model=model_path,dtype="half", tensor_parallel_size=1,max_logprobs=35000)
-                    # model = LLM(model=model_path,dtype="half", tensor_parallel_size=1)
-                    tokenizer = AutoTokenizer.from_pretrained(model_path, padding_side="left")
-                    catchData = (model,tokenizer)
-                    RootConfig.tempModelCatch.append({"path":model_path,"data":catchData})
-                    model = None
-                    tokenizer = None
-                    catchData = None
-                    
-                elif model_name == "llama2":
-                    llama2_model = LLM(model_path, dtype="half")
-                    catchData = llama2_model
-                    RootConfig.tempModelCatch.append({"path":model_path,"data":catchData})
-                    llama2_model = None
-                    catchData = None
+    
+    if catch_flag == True:
+        pass
+    else:
+        print("------------load model path :----,\n",model_path)
+        set_proxy()
+        try:
+            if model_name == "selfrag":
+                model = LLM(model=model_path,dtype="half",
+                            tensor_parallel_size=torch.cuda.device_count(),
+                            max_logprobs=35000,
+                            trust_remote_code=True)
+                # model = LLM(model=model_path,dtype="half", tensor_parallel_size=1)
+                tokenizer = AutoTokenizer.from_pretrained(model_path, padding_side="left")
+                catchData = {
+                    "model":model,
+                    "tokenizer":tokenizer
+                }
+                RootConfig.tempModelCatch.append({"path":model_path,"data":catchData})
+                model = None
+                tokenizer = None
+                catchData = None
                 
-                elif model_name == "baichuan2":
-                    model = LLM(model=model_path,trust_remote_code=True) 
-                    catchData = model
-                    RootConfig.tempModelCatch.append({"path":model_path,"data":catchData})
-                    model = None
-                    tokenizer = None
-                    catchData = None
-                    
-                elif model_name == "NED":
-                    model = Refined.from_pretrained(model_name=model_path,
-                                            entity_set="wikidata",
-                                            download_files=True,
-                                            use_precomputed_descriptions=True)
-                    catchData = model
-                    RootConfig.tempModelCatch.append({"path":model_path,"data":catchData})
-                    model = None
-                    catchData = None
+            elif model_name == "llama2":
+                model = LLM(model_path,
+                            dtype="half",
+                            trust_remote_code=True,
+                            tensor_parallel_size=torch.cuda.device_count())
+                tokenizer = AutoTokenizer.from_pretrained(model_path, padding_side="left")
                 
-                elif model_name == "wikisp":
-                    wikisp_model = LLM(model_path, dtype="half")
-                    catchData = wikisp_model
-                    RootConfig.tempModelCatch.append({"path":model_path,"data":catchData})
-                    wikisp_model = None
-                    catchData = None
-                    
-                elif "Qwen2.5-14B-Instruct" in model_name:
-                    llm = LLM(model=model_path)
-                    catchData = llm
-                    RootConfig.tempModelCatch.append({"path":model_path,"data":catchData})
-                    llm = None
-                    catchData = None
+                # model = LlamaForCausalLM.from_pretrained(self.model_path, device_map="auto", low_cpu_mem_usage=True, torch_dtype=torch.float32)
+                # tokenizer = AutoTokenizer.from_pretrained(self.model_path,trust_remote_code=True)
                 
-                elif "BAAI/bge-base-zh-v1.5" == model_name:
-                    llm = AutoModel.from_pretrained(model_name, torch_dtype=torch.float16, trust_remote_code=True)
-                    catchData = llm
-                    RootConfig.tempModelCatch.append({"path":model_path,"data":catchData})
-                    llm = None
-                    catchData = None
-                
-                elif "/mnt/publiccache/huggingface/bge-base-en-v1.5" == model_name:
-                    llm = AutoModel.from_pretrained(model_name, torch_dtype=torch.float16, trust_remote_code=True)
-                    catchData = llm
-                    RootConfig.tempModelCatch.append({"path":model_path,"data":catchData})
-                    llm = None
-                    catchData = None
-                
-                else:
-                    pass
-                
-                break
-
-            except torch.cuda.OutOfMemoryError as e:
-                traceback.print_exc()
-                break
+                catchData = {
+                    "model":model,
+                    "tokenizer":tokenizer
+                }
+                RootConfig.tempModelCatch.append({"path":model_path,"data":catchData})
+                model = None
+                catchData = None
             
-            #     init_retry = 0
-            #     print("init cuda catch ...")
-            #     traceback.print_exc()
-            #     do_initCatch(clean_knowledge=False,clean_model=True)
-            #     init_retry += 1
-            #     if init_retry >= 3:
-            #         break
+            elif model_name == "baichuan2":
+                model = LLM(model=model_path,
+                            trust_remote_code=True,
+                            tensor_parallel_size=torch.cuda.device_count()) 
+                tokenizer = AutoTokenizer.from_pretrained(model_path, padding_side="left",trust_remote_code=True)
+                catchData = {
+                    "model":model,
+                    "tokenizer":tokenizer
+                }
+                RootConfig.tempModelCatch.append({"path":model_path,"data":catchData})
+                model = None
+                tokenizer = None
+                catchData = None
+                
+            elif model_name == "qwq":
+                # # vllm
+                model = LLM(model=model_path,
+                                dtype="half",
+                                trust_remote_code=True,
+                                tensor_parallel_size=torch.cuda.device_count(),
+                                # worker_use_ray=False,  # 启用Ray支持
+                                # enforce_eager=False,
+                                # gpu_memory_utilization=0.8, # 根据显存情况调整,
+                                )
+                tokenizer = AutoTokenizer.from_pretrained(model_path, padding_side="left",trust_remote_code=True)
+                catchData = {
+                    "model":model,
+                    "tokenizer":tokenizer
+                }
+                RootConfig.tempModelCatch.append({"path":model_path,"data":catchData})
+                model = None
+                tokenizer = None
+                catchData = None
+                
+            elif "Qwen" in model_name:
+                model = LLM(model=model_path,tensor_parallel_size=torch.cuda.device_count(),dtype="half")
+                tokenizer = AutoTokenizer.from_pretrained(model_path, padding_side="left")
+                
+                catchData = {
+                    "model":model,
+                    "tokenizer":tokenizer
+                }
+                RootConfig.tempModelCatch.append({"path":model_path,"data":catchData})
+                model = None
+                catchData = None
+        
+            elif "bge" in model_name:
+                model = AutoModel.from_pretrained(model_name, torch_dtype=torch.float16, trust_remote_code=True)
+                catchData = {
+                    "model":model,
+                    "tokenizer":None
+                }
+                
+                RootConfig.tempModelCatch.append({"path":model_path,"data":catchData})
+                model = None
+                catchData = None
+                
+            elif model_name == "NED":
+                model = Refined.from_pretrained(model_name=model_path,
+                                        entity_set="wikidata",
+                                        download_files=True,
+                                        use_precomputed_descriptions=True)
+                catchData = {
+                    "model":model,
+                    "tokenizer":None
+                }
+                
+                RootConfig.tempModelCatch.append({"path":model_path,"data":catchData})
+                model = None
+                catchData = None
+            
+            elif model_name == "wikisp":
+                wikisp_model = LLM(model_path, dtype="half",tensor_parallel_size=torch.cuda.device_count())
+                catchData = {
+                    "model":wikisp_model,
+                    "tokenizer":None
+                }
+                RootConfig.tempModelCatch.append({"path":model_path,"data":catchData})
+                wikisp_model = None
+                catchData = None
 
-            except Exception as e:
-                traceback.print_exc()
-                break
+
+            else:
+                pass
+
+        except torch.cuda.OutOfMemoryError as e:
+            traceback.print_exc()
 
     unset_proxy()
     result_list = list(filter(lambda x:x['path'] == model_path,RootConfig.tempModelCatch))
     
     if len(result_list) <= 0:
+        print("load model error ...")
         return None
     
     return result_list[0]['data']
@@ -723,22 +805,25 @@ def EmbeddingByRetriever(dataList,retrieverNameList):
     for retrieverName in retrieverNameList:
         id_data_config = {}
         
-        if "contriever" in retrieverName:
+        if "contriever" == retrieverName:
             embedding_name = "contriever_embedding"
             allids_list,allembeddings_list = do_contriever_embedding(passages=dataList)
-        elif "BGE" in retrieverName:
+        elif "BGE" == retrieverName:
             embedding_name = "BGE_embedding"
             allids_list,allembeddings_list = do_BGE_embedding(passages=dataList)
-        elif "DPR" in retrieverName:
+        elif "BGEM3" == retrieverName:
+            embedding_name = "BGEM3_embedding"
+            allids_list,allembeddings_list = do_BGEM3_embedding(passages=dataList)
+        elif "DPR" == retrieverName:
             embedding_name = "DPR_embedding"
             allids_list,allembeddings_list = do_DPR_embedding(passages=dataList)
-        elif "E5" in retrieverName:
+        elif "E5" == retrieverName:
             embedding_name = "E5_embedding"
             allids_list,allembeddings_list = do_E5_embedding(passages=dataList)
-        elif "BERT" in retrieverName:
+        elif "BERT" == retrieverName:
             embedding_name = "BERT_embedding"
             allids_list,allembeddings_list = do_BERT_embedding(passages=dataList)
-        # elif "BM25" in retrieverName:
+        # elif "BM25" == retrieverName:
             # embedding_name = "BM25_embedding"
             # allids_list,allembeddings_list = do_BM25_embedding(input_List=dataList)
         else:

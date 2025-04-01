@@ -22,7 +22,7 @@ class Args:
         metadata={'help': 'The encoder name or path.'}
     )
     model_path: str = field(
-        default="BAAI/bge-base-en-v1.5",
+        default="BAAI/bge-m3",
         metadata={'help': 'The encoder name or path.'}
     )
     dtype: str = field(
@@ -189,11 +189,12 @@ def embedding(
     parser = HfArgumentParser([Args])
     args: Args = parser.parse_args_into_dataclasses()[0]
     args.model_path = RootConfig.BGEm3_model_path
+    print("--args: ",args)
     
     model = get_model(args=args, device=0)
     
     allids, allembeddings = model.encode_corpus_plus(passages, batch_size=1, max_length=256)
-    print(f"allids[0]: {allids[0]}")
-    print(f"allembeddings[0]: {allembeddings[0]}")
+    # print(f"allids[0]: {allids[0]}")
+    # print(f"allembeddings[0]: {allembeddings[0]}")
     
     return allids, allembeddings

@@ -32,6 +32,7 @@ class DenseEncoder(torch.nn.Module):
         elif args.dtype == 'fp32':
             kwargs['torch_dtype'] = torch.float32
         self.args = args
+        print("------BGEM3-------")
         print(f"Model kwargs: {kwargs}")
         if not args.T5:
             
@@ -211,5 +212,6 @@ class DenseEncoder(torch.nn.Module):
         return encoded_embeds
 
 def get_model(args, device):
+    print("--BGEM3 model_eval-----")
     return DenseEncoder(args, device)
 

@@ -10,11 +10,13 @@ class BGEM3_Retriever:
         searchDataList,
         top_k = 10,
         model_path:str="",
+        ExternalKnowledgeConflictsFlag:bool=False
     ):
         self.top_k = top_k
         self.logSaver = RootConfig.logSaver
         self.model_path = model_path
         self.searchDataList = searchDataList
+        self.ExternalKnowledgeConflictsFlag = ExternalKnowledgeConflictsFlag
 
     def run(
         self,
@@ -32,7 +34,7 @@ class BGEM3_Retriever:
             return {"final_result": []}
         
         if self.logSaver is not None:
-            self.logSaver.writeStrToLog("Function -> BGE_Retriever -> run | Given the search text, return the search content ")
+            self.logSaver.writeStrToLog("Function -> BGEM3_Retriever -> run | Given the search text, return the search content ")
             self.logSaver.writeStrToLog("search input -> : query_list: "+str(query_list))
             
         print("------------self.model_path---------")

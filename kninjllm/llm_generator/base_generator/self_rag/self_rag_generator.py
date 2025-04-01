@@ -22,7 +22,10 @@ class RagGenerator:
             self.logSaver = None
         self.generation_kwargs = generation_kwargs
         self.knowledgeDiffFuntion = knowledgeDiffFuntion
-        self.model,self.tokenizer = loadModelByCatch(model_name='selfrag',model_path=model_path)
+            
+        loadModel = loadModelByCatch(model_name='selfrag',model_path=model_path)
+        self.model = loadModel['model']
+        self.tokenizer = loadModel['tokenizer']
             
     def run(
         self,
@@ -43,12 +46,6 @@ class RagGenerator:
         
         if prompt != "" and len(prompt_list) == 0:
             prompt_list = [prompt]
-        
-        # 外部知识与模型知识冲突检测与消解
-        from kninjllm.llm_conflict_of_knowledge.External_Model_Knowledge_Conflicts import ExternalModelKnowledgeConflicts
-        conflicts = ExternalModelKnowledgeConflicts()
-        for index,p in enumerate(prompt_list):
-            prompt_list[index] = conflicts.execute(prompt=p,function_str=self.knowledgeDiffFuntion)
         
         if self.logSaver is not None and saveLogFlag == True:
             self.logSaver.writeStrToLog("Function -> RagGenerator -> run")

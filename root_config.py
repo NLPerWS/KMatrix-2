@@ -8,13 +8,9 @@ class RootConfig:
     tempPipeLineKnowledgeCatch = []
     
     # ---------------------------------- The following configurations need to be modified -----------------------------------
-    
-    # 1. Absolute path of the project(default: the path where the project is located).
-    # root_path = os.path.dirname(os.path.abspath(__file__)) 
-    
-    # 2. If you start with Docker, the path is this.
-    root_path = "/app/KMatrix_v2"
-    
+    # Absolute path of the project.
+    root_path = os.path.dirname(
+        os.path.abspath(__file__))
     print("--------------root_path-------------\n",root_path)
     
     if not root_path.endswith("/"):
@@ -26,14 +22,9 @@ class RootConfig:
     knowledgeUploadDirPath = root_path + "dir_knowledge_upload/"
 
     # GPU used in the project
-    CUDA_VISIBLE_DEVICES = "1"
+    CUDA_VISIBLE_DEVICES = "4,5,6,7"
     # Server PORT
-    SERVER_PORT = "8020"
-    
-    # Default ES connection address
-    ES_HOST = "http://127.0.0.1:9200"
-    ES_USERNAME = "username"
-    ES_PASSWORD = "password"
+    SERVER_PORT = "10020"
     
     # OPENAI api_key
     openai_api_key = "sk-xxx"
@@ -51,20 +42,28 @@ class RootConfig:
     model_path = root_path
     
     # self_rag model
-    selfRAG_model_path = model_path + "dir_model/generator/selfrag_llama2_7b"
+    selfRAG_model_path = "/netcache/huggingface/selfrag7b"
     if not os.path.exists(selfRAG_model_path):
         print("selfRAG Does not exist locally, requires online loading...")
         selfRAG_model_path = "selfrag/selfrag_llama2_7b"    
     # llama2 model
-    llama2_model_path =  model_path + "dir_model/generator/Llama-2-7b-chat-hf"
+    llama2_model_path =  "/netcache/huggingface/Llama-2-13b-chat-hf"
     if not os.path.exists(llama2_model_path):
         print("llama2 Does not exist locally, requires online loading...")
         llama2_model_path = "meta-llama/Llama-2-7b-chat-hf"
     # baichuan2 model
-    baichuan2_model_path =  model_path + "dir_model/generator/Baichuan2-13B-Chat"
+    baichuan2_model_path = "/netcache/huggingface/Baichuan2-13B-Base"
     if not os.path.exists(baichuan2_model_path):
         print("baichuan2 Does not exist locally, requires online loading...")
-        baichuan2_model_path = "baichuan-inc/Baichuan2-13B-Chat"    
+        baichuan2_model_path = "baichuan-inc/Baichuan2-13B-Chat"  
+      
+    # QWQ_model_path =  "/netcache/huggingface/QwQ-32B"
+    QWQ_model_path =  "/netcache/huggingface/Qwen2.5-14B-Instruct"
+    # QWQ_model_path =  "/netcache/huggingface/Qwen2-7B-Instruct/"
+    if not os.path.exists(QWQ_model_path):
+        print("QWQ Does not exist locally, requires online loading...")
+        QWQ_model_path = "Qwen/QwQ-32B"    
+
 
     NED_model_path = model_path + "dir_model/generator/NED_model"
     if not os.path.exists(NED_model_path):
@@ -83,7 +82,10 @@ class RootConfig:
         print("BGE Does not exist locally, requires online loading...")
         BGE_model_path = "BAAI/bge-large-en-v1.5"
         
-    BGEm3_model_path = "BAAI/bge-m3"
+    BGEm3_model_path = "/netcache/huggingface/BAAI-bge-m3"
+    if not os.path.exists(BGEm3_model_path):
+        print("BGEM3 Does not exist locally, requires online loading...")
+        BGEm3_model_path = "BAAI/bge-m3"
         
     # contriever model
     contriever_model_path = model_path + "dir_model/retriever/contriever/contriever_msmarco_model"

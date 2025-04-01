@@ -563,13 +563,6 @@ class OpenAIGenerator:
         if prompt != "" and len(prompt_list) == 0:
             prompt_list = [prompt]
         
-        
-        # 外部知识与模型知识冲突检测与消解
-        from kninjllm.llm_conflict_of_knowledge.External_Model_Knowledge_Conflicts import ExternalModelKnowledgeConflicts
-        conflicts = ExternalModelKnowledgeConflicts()
-        for index,p in enumerate(prompt_list):
-            prompt_list[index] = conflicts.execute(prompt=p,function_str=self.knowledgeDiffFuntion)
-            
         if self.logSaver is not None:
             self.logSaver.writeStrToLog("Function -> OpenAIGenerator -> run")
             self.logSaver.writeStrToLog("Given generator prompt_list -> : " + prompt_list)

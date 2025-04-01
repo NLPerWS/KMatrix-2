@@ -18,8 +18,9 @@ class LLama2Generator:
             self.logSaver = None
         self.generation_kwargs = generation_kwargs
         self.knowledgeDiffFuntion = knowledgeDiffFuntion
-        self.model = loadModelByCatch(model_name='llama2',model_path=model_path)
-        
+        loadModel = loadModelByCatch(model_name='llama2',model_path=model_path)
+        self.model = loadModel['model']
+        self.tokenizer = loadModel['tokenizer']
     def run(
         self,
         prompt: str = "",
@@ -42,13 +43,6 @@ class LLama2Generator:
         
         if prompt != "" and len(prompt_list) == 0:
             prompt_list = [prompt]
-        
-        # 外部知识与模型知识冲突检测与消解
-        from kninjllm.llm_conflict_of_knowledge.External_Model_Knowledge_Conflicts import ExternalModelKnowledgeConflicts
-        conflicts = ExternalModelKnowledgeConflicts()
-        for index,p in enumerate(prompt_list):
-            prompt_list[index] = conflicts.execute(prompt=p,function_str=self.knowledgeDiffFuntion)
-        
         
         if self.logSaver is not None:
             self.logSaver.writeStrToLog("Function -> LLama2Generator -> run")
