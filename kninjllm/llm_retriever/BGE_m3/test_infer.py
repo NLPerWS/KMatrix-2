@@ -14,7 +14,7 @@ if __name__ == "__main__":
             "blob": None,
             "score": None,
             "embedding": None,
-            "BGE_embedding": None,
+            "BGEM3_embedding": None,
             "contriever_embedding": [
                 [
                     0.1
@@ -44,7 +44,7 @@ if __name__ == "__main__":
             "blob": None,
             "score": None,
             "embedding": None,
-            "BGE_embedding": None,
+            "BGEM3_embedding": None,
             "contriever_embedding": [
                 [
                     0.1
@@ -73,7 +73,7 @@ if __name__ == "__main__":
         #     "blob": None,
         #     "score": None,
         #     "embedding": None,
-        #     "BGE_embedding": [0.0002827, -0.0008128],
+        #     "BGEM3_embedding": [0.0002827, -0.0008128],
         #     "contriever_embedding": [
         #         [
         #             0.1
@@ -102,7 +102,7 @@ if __name__ == "__main__":
         #     "blob": None,
         #     "score": None,
         #     "embedding": None,
-        #     "BGE_embedding": [0.0002827, -0.00128],
+        #     "BGEM3_embedding": [0.0002827, -0.00128],
         #     "contriever_embedding": [
         #         [
         #             0.1
@@ -131,7 +131,7 @@ if __name__ == "__main__":
         #     "blob": None,
         #     "score": None,
         #     "embedding": None,
-        #     "BGE_embedding": [0.01827, -0.00128],
+        #     "BGEM3_embedding": [0.01827, -0.00128],
         #     "contriever_embedding": [
         #         [
         #             0.1
@@ -160,7 +160,7 @@ if __name__ == "__main__":
         #     "blob": None,
         #     "score": None,
         #     "embedding": None,
-        #     "BGE_embedding": [0.01827, -0.0028],
+        #     "BGEM3_embedding": [0.01827, -0.0028],
         #     "contriever_embedding": [
         #         [
         #             0.1
@@ -193,7 +193,7 @@ if __name__ == "__main__":
             "blob": None,
             "score": None,
             "embedding": None,
-            "BGE_embedding": None,
+            "BGEM3_embedding": None,
             "contriever_embedding": [
                 [
                     0.1
@@ -219,7 +219,7 @@ if __name__ == "__main__":
             "blob": None,
             "score": None,
             "embedding": None,
-            "BGE_embedding": None,
+            "BGEM3_embedding": None,
             "contriever_embedding": [
                 [
                     0.1

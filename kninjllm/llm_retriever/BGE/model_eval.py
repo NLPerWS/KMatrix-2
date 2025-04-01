@@ -32,6 +32,7 @@ class DenseEncoder(torch.nn.Module):
         elif args.dtype == 'fp32':
             kwargs['torch_dtype'] = torch.float32
         self.args = args
+        print("------BGE-------model_eval")
         print(f"Model kwargs: {kwargs}")
         if not args.T5:
             

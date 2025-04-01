@@ -554,9 +554,14 @@ class Graph2TextModule(SummarizationModule):
 
 
 def main(args, model=None) -> SummarizationModule:
-    
-    catch_model = loadModelByCatch(model_name=args.model_name_or_path+"_model",model_path=args.model_name_or_path+"_model")
-    catch_trainer = loadModelByCatch(model_name=args.model_name_or_path+"_traner",model_path=args.model_name_or_path+"_traner")
+    try:
+        catch_model = loadModelByCatch(model_name=args.model_name_or_path+"_model",model_path=args.model_name_or_path+"_model")['model']
+    except:
+        catch_model = None
+    try:
+        catch_trainer = loadModelByCatch(model_name=args.model_name_or_path+"_traner",model_path=args.model_name_or_path+"_traner")['model']
+    except:
+        catch_trainer = None
     
     print("catch_trainer\n",catch_trainer)
     

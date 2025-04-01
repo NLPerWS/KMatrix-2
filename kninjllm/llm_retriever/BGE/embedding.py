@@ -194,6 +194,6 @@ def embedding(
     
     allids, allembeddings = model.encode_corpus_plus(passages, batch_size=1, max_length=256)
     print(f"allids[0]: {allids[0]}")
-    print(f"allembeddings[0]: {allembeddings[0]}")
+    # print(f"allembeddings[0]: {allembeddings[0]}")
     
     return allids, allembeddings

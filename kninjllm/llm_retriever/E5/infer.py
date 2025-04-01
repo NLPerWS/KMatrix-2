@@ -209,7 +209,7 @@ def infer(
             corpus_embedding = corpus_embedding.tolist()[0]
         embeddings.append(corpus_embedding)
     embeddings = np.array(embeddings, dtype=np.float32)
-    print(f"embeddings: {embeddings}")
+    # print(f"embeddings: {embeddings}")
     
     
     faiss_index = load_index(

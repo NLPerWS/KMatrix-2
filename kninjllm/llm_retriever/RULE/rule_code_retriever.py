@@ -65,8 +65,13 @@ class RULE_Code_Retriever:
         args = parser.parse_args()
         args.model_path = self.model_path
         
-        args.model = loadModelByCatch(model_name=self.model_path,model_path=self.model_path)
-        args.tokenizer = AutoTokenizer.from_pretrained(self.model_path)
+        # args.model = loadModelByCatch(model_name=self.model_path,model_path=self.model_path)
+        # args.tokenizer = AutoTokenizer.from_pretrained(self.model_path)
+        
+        loadModel = loadModelByCatch(model_name=self.model_path,model_path=self.model_path)
+        args.model = loadModel['model']
+        args.tokenizer = loadModel['tokenizer']
+        
         # args.model = None
         # args.tokenizer = None
         # args.data_path = f"{work_path}/dataset/{dataset}/test_data.json"

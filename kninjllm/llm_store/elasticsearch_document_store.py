@@ -163,6 +163,29 @@ class ElasticsearchDocumentStore:
 
         return documents
     
+    def _search_all_documents_to_dict(self) -> List[Document]:
+        documents_dict = []
+        
+        scroll = '5m'  
+        query = {"query": {"match_all": {}}}  
+
+        response = self._client.search(
+            index=self._index,
+            scroll=scroll,
+            size=10000,  
+            body=query
+        )
+
+        while True:
+            if len(response['hits']['hits']) == 0:
+                break
+
+            documents_dict.extend(hit['_source'] for hit in response["hits"]["hits"])
+
+            response = self._client.scroll(scroll_id=response['_scroll_id'], scroll=scroll)
+
+        return documents_dict
+    
     
     def filter_documents(self, filters: Optional[Dict[str, Any]] = None) -> List[Document]:
         if filters and "operator" not in filters and "conditions" not in filters:
@@ -303,6 +326,7 @@ class ElasticsearchDocumentStore:
         filters: Optional[Dict[str, Any]] = None,
         top_k: int = 10,
         num_candidates: Optional[int] = None,
+        field:str = "field"
     ) -> List[Document]:
         """
         Retrieves documents that are most similar to the query embedding using a vector similarity metric.
@@ -333,7 +357,7 @@ class ElasticsearchDocumentStore:
 
         body: Dict[str, Any] = {
             "knn": {
-                "field": "embedding",
+                "field": field,
                 "query_vector": query_embedding,
                 "k": top_k,
                 "num_candidates": num_candidates,

@@ -64,7 +64,7 @@ class ElasticsearchEmbeddingRetriever:
         return default_from_dict(cls, data)
 
     @component.output_types(documents=List[Document])
-    def run(self, query_embedding: List[float], filters: Optional[Dict[str, Any]] = None, top_k: Optional[int] = None):
+    def run(self, query_embedding: List[float], filters: Optional[Dict[str, Any]] = None, top_k: Optional[int] = None,field:str = "field"):
         """
         Retrieve documents using a vector similarity metric.
 
@@ -78,5 +78,6 @@ class ElasticsearchEmbeddingRetriever:
             filters=filters or self._filters,
             top_k=top_k or self.top_k,
             num_candidates=self._num_candidates,
+            field=field
         )
         return {"documents": docs}

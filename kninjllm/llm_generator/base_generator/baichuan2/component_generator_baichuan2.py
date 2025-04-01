@@ -22,8 +22,9 @@ class Baichuan2Generator:
         self.generation_kwargs = generation_kwargs
         self.knowledgeDiffFuntion = knowledgeDiffFuntion
         self.saveFlag = False
-        self.model = loadModelByCatch(model_name='baichuan2',model_path=model_path)
-        self.tokenizer = None
+        loadModel = loadModelByCatch(model_name='baichuan2',model_path=model_path)
+        self.model = loadModel['model']
+        self.tokenizer = loadModel['tokenizer']
         print("Baichuan2 ... ")
     
     def run(
@@ -47,13 +48,6 @@ class Baichuan2Generator:
         
         if prompt != "" and len(prompt_list) == 0:
             prompt_list = [prompt]
-        
-        # 外部知识与模型知识冲突检测与消解
-        from kninjllm.llm_conflict_of_knowledge.External_Model_Knowledge_Conflicts import ExternalModelKnowledgeConflicts
-        conflicts = ExternalModelKnowledgeConflicts()
-        for index,p in enumerate(prompt_list):
-            prompt_list[index] = conflicts.execute(prompt=p,function_str=self.knowledgeDiffFuntion)
-        
         
         if self.logSaver is not None:
             self.logSaver.writeStrToLog("Function -> Baichuan2Generator -> run")

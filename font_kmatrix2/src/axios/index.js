@@ -1,7 +1,7 @@
 // 引入
 import axios from 'axios';
 
-export const baseURL = 'http://127.0.0.1:8020'
+export const baseURL = 'http://127.0.0.1:10020'
 
 // 创建请求实例
 export const axios_instance = axios.create({

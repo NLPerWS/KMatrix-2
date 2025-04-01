@@ -8,7 +8,6 @@ from kninjllm.llm_knowledgeUploader.utils.other_prompts import domain_selection_
 from kninjllm.llm_knowledgeUploader.utils.final_parser import Parser
 
 from root_config import RootConfig
-from kninjllm.llm_utils.common_utils import loadRetriever,loadGenerator,loadModelByCatch
 from kninjllm.llm_generator.close_generator.openai_generator import OpenAIGenerator
 
 import kninjllm.llm_knowledgeUploader.utils.globalvar

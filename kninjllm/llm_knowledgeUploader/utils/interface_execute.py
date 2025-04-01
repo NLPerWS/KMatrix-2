@@ -1,6 +1,6 @@
 import traceback
 from root_config import RootConfig
-from kninjllm.llm_utils.common_utils import set_proxy,unset_proxy
+from kninjllm.llm_utils.common_utils import set_proxy,unset_proxy,EmbeddingByRetriever
 import time
 import json
 import requests
@@ -17,6 +17,8 @@ from kninjllm.llm_knowledgeUploader.utils.mysql_utils import MySQLUtils
 from kninjllm.llm_knowledgeUploader.utils.neo4j_utils import Neo4jHandler
 from kninjllm.llm_knowledgeUploader.utils.graphdb_utils import GraphHandler
 
+from kninjllm.llm_store.elasticsearch_document_store import ElasticsearchDocumentStore
+from kninjllm.llm_retriever.elasticsearch.embedding_retriever import ElasticsearchEmbeddingRetriever
 
 from kninjllm.llm_retriever.contriever.Contriever_retriever import Contriever_Retriever
 from kninjllm.llm_queryGenerator.sparql_language_generator import Sparql_language_generator
@@ -33,10 +35,13 @@ class InterfaceExecute:
         self.url = url
         self.parser = parser
         self.tables = tables
+        self.topk = 10
 
         if self.parser == "SPARQLParser/Parser":
-
             self.language_generator_parser = Sparql_language_generator(tables=self.tables)
+            
+        elif self.parser == "ESParser/Parser":
+            self.language_generator_parser = None
             
         elif self.parser == "NLParser/Parser":
             self.language_generator_parser = Natural_language_generator()
@@ -282,6 +287,46 @@ class InterfaceExecute:
             knowl = str(knowl)
         return input,query,knowl 
         
+    # ES 检索接口
+    def execute_by_es(self,input):
+        
+        query = input
+        # 动态获取用户输入的url,username,password 如果用户没有输入,就使用默认配置
+        if self.url != "":
+            info = self.getInfoByUrl(self.url)
+            if info['username'] != "" and info['password'] != "" and info['dbname'] != "" and info['base_url'] != "":
+                ES_HOST = info['base_url'].strip()
+                ES_DEFAULT_DB =  info['dbname'].strip()
+                ES_USERNAME = info['username'].strip()
+                ES_PASSWORD =  info['password'].strip()
+                    
+        try:
+            # 调用es检索器
+            document_store = ElasticsearchDocumentStore(hosts = ES_HOST,index=ES_DEFAULT_DB,basic_auth=(ES_USERNAME,ES_PASSWORD))
+            retriever = ElasticsearchEmbeddingRetriever(document_store=document_store,top_k=self.topk)
+            
+            # 目前先用 contriever 有数据实例
+            query_embedding = EmbeddingByRetriever(dataList=[{"id":"1","content":input}],retrieverNameList=['contriever'])[0]['contriever_embedding']
+            res = retriever.run(query_embedding=query_embedding,top_k=self.topk,field="contriever_embedding")
+            
+            # 需要集成BGEm3 , 存储的数据需要 BGEm3 模型进行embedding
+            # query_embedding = EmbeddingByRetriever(dataList=[{"id":"1","content":input}],retrieverNameList=['BGEM3'])[0]['BGEM3_embedding']
+            # res = retriever.run(query_embedding=query_embedding,top_k=self.topk,field="BGEM3_embedding")
+            
+            results = []
+            for doc in res['documents']:
+                results.append(doc.content)
+            results = results[0:self.topk]
+            knowl = "\n\n".join(results)
+            
+        except:
+            traceback.print_exc()
+            query = ""
+            knowl = ""
+        if isinstance(knowl,list):
+            knowl = str(knowl)
+        return input,query,knowl 
+        
     # 图数据库接口 neo4j
     def execute_by_GDBMS(self,input):
         
@@ -377,12 +422,16 @@ class InterfaceExecute:
             "password":p_value
         }
                         
-    def execute(self,input):
+    def execute(self,input,topk):
+        self.topk = topk
+        
         if self.type == "google":
             self.url = self.getInfoByUrl(self.url)['base_url']
             input,processed_query,knowl = self.execute_by_google(input)
         elif self.type == "local":
             input,processed_query,knowl = self.execute_by_local(input)
+        elif self.type == "es":
+            input,processed_query,knowl = self.execute_by_es(input)
         elif self.type == "sqlite":
             input,processed_query,knowl = self.execute_by_RDBMS(input)
         elif self.type == "neo4j":

@@ -10,7 +10,6 @@ from collections import Counter
 import string
 from root_config import RootConfig
 from kninjllm.llm_generator.base_generator.self_rag.retrieval_lm.utils import TASK_INST, PROMPT_DICT, load_special_tokens, load_jsonlines, postprocess, fix_spacing,control_tokens
-from kninjllm.llm_utils.common_utils import loadRetriever,loadGenerator
 
 
 class selfRagShortTemplate:

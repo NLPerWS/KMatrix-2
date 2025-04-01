@@ -11,7 +11,7 @@ import os, json, time, csv
 from pprint import pprint
 
 from root_config import RootConfig
-from kninjllm.llm_retriever.BGE.model_eval import get_model
+from kninjllm.llm_retriever.DPR.model_eval import get_model
 logger = logging.getLogger(__name__)
 
 @dataclass
@@ -194,6 +194,6 @@ def embedding(
     
     allids, allembeddings = model.encode_corpus_plus(passages, batch_size=1, max_length=256)
     print(f"allids[0]: {allids[0]}")
-    print(f"allembeddings[0]: {allembeddings[0]}")
+    # print(f"allembeddings[0]: {allembeddings[0]}")
     
     return allids, allembeddings

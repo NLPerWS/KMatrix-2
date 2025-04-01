@@ -24,7 +24,7 @@ class Args:
         metadata={'help': 'The encoder name or path.'}
     )
     model_path: str = field(
-        default="BAAI/bge-base-en-v1.5",
+        default="BAAI/bge-m3",
         metadata={'help': 'The encoder name or path.'}
     )
     dtype: str = field(
@@ -211,15 +211,15 @@ def infer(
     
     embeddings = []
     for idx, data in enumerate(passage):
-        if "BGE_embedding" in data and data['BGE_embedding'] != None:
-            corpus_embedding = data['BGE_embedding']
+        if "BGEM3_embedding" in data and data['BGEM3_embedding'] != None:
+            corpus_embedding = data['BGEM3_embedding']
         else:
             text = [data['content']]
             corpus_embedding = model.encode_corpus(text, batch_size=1, max_length=512)
             corpus_embedding = corpus_embedding.tolist()[0]
         embeddings.append(corpus_embedding)
     embeddings = np.array(embeddings, dtype=np.float32)
-    print(f"embeddings: {embeddings}")
+    # print(f"embeddings: {embeddings}")
     
     
     faiss_index = load_index(

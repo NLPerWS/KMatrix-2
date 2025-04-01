@@ -4,7 +4,8 @@ from kninjllm.llm_utils.common_utils import knowledge_conflict_check
 
 class InterfaceRetriever:
     def __init__(self,searchDataList, top_k=10, model_path:str="",ExternalKnowledgeConflictsFlag=False):
-
+        
+        self.top_k = top_k
         self.searchDataList = searchDataList
         self.ExternalKnowledgeConflictsFlag = ExternalKnowledgeConflictsFlag
 
@@ -16,7 +17,7 @@ class InterfaceRetriever:
                 interface = domain_obj[domain_obj_xld]
                 # print('====================================================================================')
                 # print('-------------domain_obj_xld------------------\n',domain_obj_xld)
-                res_obj = interface.execute(query)['final_result']
+                res_obj = interface.execute(query,self.top_k)['final_result']
                 knowl = res_obj['knowl']
                 if interface.type == "graphdb" and "Answer:" in knowl: 
                     knowl = "Answer:" + knowl.split("Answer:")[1].strip()
