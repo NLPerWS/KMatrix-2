@@ -51,7 +51,7 @@ To get started with KMatrix2, simply clone it from Github and install (requires 
     # After installing the node environment, execute:
     $ cd font_kmatrix2
     $ npm install
-    
+
 
     # Additional model
     You need to visit these two websites to download the text2natsql_schema_item_classifier and text2natsql-t5-base models.
@@ -128,7 +128,7 @@ We can easily create descriptive and procedural knowledge bases, including Text,
 
    KMatrix-2 automatically matches the corresponding Knowledge Integrator (Unified Verbalizer and Unified Querier) based on the selected knowledge bases, without the need for manual selection by users.
 
-   
+
 <img src="images/deploy2-3.png" style="zoom:50%;"/>
 
 
@@ -216,6 +216,30 @@ We can easily create descriptive and procedural knowledge bases, including Text,
 |        Without         | 25.19% | 85.71% | 27.71% | 11.81% |  53.27%   |   24.81%   |   11.81%   | 27.11%  |
 |      Declarative       | 27.96% | 95.24% | 22.89% | 48.80% |  33.82%   |   28.34%   |   48.55%   | 23.49%  |
 | Declarative+Procedural | 31.97% | 95.24% | 40.96% | 58.43% |  29.27%   |   32.06%   |   58.55%   | 40.96%  |
+
+
+
+**Semantic parsing performance of Query Parser(EM)**
+
+| Sparql Parser Evaluation |        | Sql Parser Evaluation |        |
+| :----------------------: | :----: | :-------------------: | :----: |
+|          Model           |   EM   |         Model         |   EM   |
+|          WikiSP          | 75.55% |    RESDSQL(t5-3b)     | 72.64% |
+
+
+
+**Knowledge conflict resolution evaluation**
+
+|                        |     Method     |  Acc   |
+| :--------------------: | :------------: | :----: |
+| CM Conflict Resolution | w/o knowledge  | 14.69% |
+|                        |  w/ knowledge  | 28.59% |
+|                        |    +COIECD     | 66.44% |
+| IC Conflict Resolution | w/o knowledge  | 0.01%  |
+|                        |  w/ knowledge  | 42.70% |
+|                        | +Discriminator | 50.00% |
+
+
 
 
 

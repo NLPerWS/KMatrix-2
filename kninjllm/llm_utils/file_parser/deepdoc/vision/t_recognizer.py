@@ -13,7 +13,10 @@
 
 # first time to download wordnet !!!
 import nltk
-nltk.download('wordnet')
+try:
+    nltk.data.find('corpora/wordnet')
+except LookupError:
+    nltk.download('wordnet')
 
 import os, sys
 sys.path.insert(
