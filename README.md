@@ -153,7 +153,7 @@ We can easily create descriptive and procedural knowledge bases, including Text,
 
 **Heterogeneous descriptive and procedural knowledge used in KMatrix-2 evaluation**:
 
-Our knowledge bases are available at: **https://www.modelscope.cn/datasets/zhangyujie/KMatrix2_Rep/files** (located in the 'knowledges/' folder).
+Our knowledge bases are available at: **https://www.modelscope.cn/datasets/zhangyujie/KMatrix2_Rep/files** ( located in the 'knowledges/' folder ).
 
 |    Knowledge Type     |    Knowledge Name    | Knowledge Scale |
 | :-------------------: | :------------------: | :-------------: |
@@ -167,7 +167,7 @@ Our knowledge bases are available at: **https://www.modelscope.cn/datasets/zhang
 
 **Evaluation datasets selectd by KMatrix-2**:  
 
-Our datasets are available at: **https://www.modelscope.cn/datasets/zhangyujie/KMatrix2_Rep/files** (located in the 'datasets/' folder).
+Our datasets are available at: **https://www.modelscope.cn/datasets/zhangyujie/KMatrix2_Rep/files** ( located in the 'datasets/' folder ).
 
 |  Dataset Type  | Dataset Name | Dataset Scale |
 | :------------: | :----------: | :-----------: |
