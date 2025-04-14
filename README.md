@@ -25,7 +25,20 @@ We present KMatrix-2, an open-source toolkit that supports comprehensive heterog
 
 ## :wrench: Quick Start
 
-### 1. Quick Start from Manual
+###  1. Quick Start from Docker (recommended)
+
+``` 
+$ git clone https://github.com/NLPerWS/KMatrix-2.git
+$ chmod +x -R KMatrix-2
+Set configurations that needs to be modified in the root_config.py
+Set the baseURL in font_kmatrix2/src/axios/index.js to the IP address of deployment server.
+
+$ docker pull leap233/kmatrix2:v1
+$ cd KMatrix-2
+$ sh docker_start.sh	
+```
+
+### 2. Quick Start from Manual
 
 **Installation** 
 
@@ -81,20 +94,6 @@ To get started with KMatrix2, simply clone it from Github and install (requires 
     $ cd KMatrix-2
     $ python flask_server.py
     Visit KMatrix2 toolkit using the browser: http://yourserverip:10021
-
-
-###  2. Quick Start from Docker (recommended)
-
-``` 
-$ git clone https://github.com/NLPerWS/KMatrix-2.git
-$ chmod +x -R KMatrix-2
-Set configurations that needs to be modified in the root_config.py
-Set the baseURL in font_kmatrix2/src/axios/index.js to the IP address of deployment server.
-
-$ docker pull leap233/kmatrix2:v1
-$ cd KMatrix-2
-$ sh docker_start.sh	
-```
 
 ## :dizzy: Toolkit Usage
 
