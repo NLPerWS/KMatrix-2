@@ -187,7 +187,9 @@ You can find our datasets here: **https://www.modelscope.cn/datasets/zhangyujie/
 
 ## :page_facing_up: Experimental Results	
 
-**Rule knowledge retrieval performance evaluation:**
+**Knowledge access performance evaluation**
+
+**(a) Rule knowledge retrieval performance evaluation (Recall@10)**
 
 |                    | Clutrr | Deer |  Law   | Ulogic | TheoremQA | Clutrr-Fol | Ulogic-Fol | Law-Fol |
 | :----------------: | ------ | :--: | :----: | ------ | --------- | ---------- | ---------- | ------- |
@@ -196,7 +198,7 @@ You can find our datasets here: **https://www.modelscope.cn/datasets/zhangyujie/
 |        BGE         | 4.77%  | 100% | 97.59% | 95.06% | 67.45%    | 4.96%      | 90.72%     | 92.77%  |
 | Self-Induction+BGE | 15.08% | 100% | 98.19% | 98.67% | 80.36%    | 13.55%     | 98.80%     | 97.59%  |
 
-**Code knowledge retrieval performance evaluation:**
+**(b) Code knowledge retrieval performance evaluation (Recall@10)**
 
 |                    | Codetrans-Dl | Stackoverflow | Apps   | Codefeedback | Codetrans-Contest | Text2sql | Cosqa  |
 | ------------------ | ------------ | ------------- | ------ | ------------ | ----------------- | -------- | ------ |
@@ -205,7 +207,17 @@ You can find our datasets here: **https://www.modelscope.cn/datasets/zhangyujie/
 | BGE                | 71.11%       | 71.21%        | 10.84% | 43.69%       | 60.18%            | 82.79%   | 41.20% |
 | Self-Induction+BGE | 56.86%       | 87.98%        | 46.10% | 49.63%       | 70.63%            | 91.76%   | 39.66% |
 
-**Descriptive & procedural knowledge enhancement performance evaluation on Factual QA tasks:**
+**(c) Semantic parsing performance of Query Parser (EM)**
+
+| Sparql Parser Evaluation |        | Sql Parser Evaluation |        |
+| :----------------------: | :----: | :-------------------: | :----: |
+|          Model           |   EM   |         Model         |   EM   |
+|          WikiSP          | 75.55% |    RESDSQL(t5-3b)     | 72.64% |
+
+
+**Descriptive & procedural knowledge enhancement performance evaluation**
+
+**(a) Descriptive & procedural knowledge enhancement performance evaluation on Factual QA tasks (Acc)**
 
 |       Knowledge        | Popqa  | Webqa  |   NQ   | Triviaqa | Hotpotqa | 2Wikiqa |
 | :--------------------: | :----: | :----: | :----: | :------: | :------: | :-----: |
@@ -213,23 +225,13 @@ You can find our datasets here: **https://www.modelscope.cn/datasets/zhangyujie/
 |      Declarative       | 62.26% | 37.60% | 36.62% |  61.70%  |  27.90%  | 26.45%  |
 | Declarative+Procedural | 62.54% | 36.96% | 35.84% |  60.74%  |  27.20%  | 26.35%  |
 
-**Descriptive & procedural knowledge enhancement performance evaluation on Inferential QA tasks:**
+**(b) Descriptive & procedural knowledge enhancement performance evaluation on Inferential QA tasks (Acc)**
 
 |       Knowledge        | Clutrr |  Deer  |  Law   | Ulogic | TheoremQA | Clutrr-Fol | Ulogic-Fol | Law-Fol |
 | :--------------------: | :----: | :----: | :----: | :----: | :-------: | :--------: | :--------: | :-----: |
 |        Without         | 25.19% | 85.71% | 27.71% | 11.81% |  53.27%   |   24.81%   |   11.81%   | 27.11%  |
 |      Declarative       | 27.96% | 95.24% | 22.89% | 48.80% |  33.82%   |   28.34%   |   48.55%   | 23.49%  |
 | Declarative+Procedural | 31.97% | 95.24% | 40.96% | 58.43% |  29.27%   |   32.06%   |   58.55%   | 40.96%  |
-
-
-
-**Semantic parsing performance of Query Parser(EM)**
-
-| Sparql Parser Evaluation |        | Sql Parser Evaluation |        |
-| :----------------------: | :----: | :-------------------: | :----: |
-|          Model           |   EM   |         Model         |   EM   |
-|          WikiSP          | 75.55% |    RESDSQL(t5-3b)     | 72.64% |
-
 
 
 **Knowledge conflict resolution evaluation**
