@@ -6,12 +6,12 @@
 
 
 
-We present KMatrix-2, an open-source toolkit that supports comprehensive heterogeneous knowledge collaborative enhancement for LLMs, our main contributions are:
+We present KMatrix-2, an open-source toolkit that supports comprehensive heterogeneous knowledge collaborative enhancement for LLMs, with a user-friendly Graphical User Interface (GUI). our main contributions are:
 
 
 1. The paper proposes a comprehensive heterogeneous knowledge collaborative enhancement toolkit (KMatrix-2) for LLMs. Compared with previous toolkits, which mainly focused on descriptive knowledge, KMatrix-2 specifically considers the enhancement on procedural knowledge.
 
-2. KMatrix-2 offers a rich selection of modular components and several typical enhancement patterns to support convenient construction of mainstream heterogeneous K-LLMs systems.
+2. KMatrix-2 offers a rich selection of modular components and several typical enhancement patterns to support convenient construction of mainstream heterogeneous K-LLMs systems, along with an intuitive GUI for user-friendly operation.
 
 3. KMatrix-2 integrates systematic knowledge conflict resolution solutions for better knowledge integration, including inter-context and context-memory conflict resolution.
 
@@ -98,16 +98,16 @@ $ sh docker_start.sh
 
 ## :dizzy: Toolkit Usage
 
-KMatrix-2 is an open-source toolkit that supports comprehensive heterogeneous knowledge collaborative enhancement for Large Language Models(K-LLMs). We inherit the main framework of KMatrix, but place it in the background to hide K-LLMs design details. A rich of modular components (like Retrievers, Generators, Conflict Resolver, etc) and several typical enhancement patterns (such as loop and adaptive patterns) are encapsulated, and can be combined to conveniently construct mainstream heterogeneous K-LLMs systems. 
+KMatrix-2 is an open-source toolkit that supports comprehensive heterogeneous knowledge collaborative enhancement for Large Language Models(K-LLMs). We inherit the main framework of KMatrix, but place it in the background to hide K-LLMs design details. A rich of modular components (like Retrievers, Generators, Conflict Resolver, etc) and several typical enhancement patterns (such as loop and adaptive patterns) are encapsulated, and can be combined to conveniently construct mainstream heterogeneous K-LLMs systems with an user-friendly GUI. 
 
-Our toolkit consists of three sections: Knowledge Base Management, System Design and Interaction, and Task Management and Evaluation. ***The screencast video of our toolkit are available at [here](https://youtu.be/E7hk-jrM2CY)***, which introduces the detailed instructions for using KMatrix-2.
+The GUI of our toolkit comprises three main sections: Knowledge Base Management, System Design and Interaction, and Task Management and Evaluation. ***The screencast video of our toolkit are available at [here](https://youtu.be/E7hk-jrM2CY)***, which introduces the detailed instructions for using KMatrix-2.
 <video width="85%" height="500" controls>
   <source src="images/kmatrix2_v2.mp4" type="video/mp4">
 </video>
 
 ### Knowledge Base Management 
 
-   Knowledge Base Management provides efficient heterogeneous descriptive and procedural knowledge access and management services, and the interface of Knowledge Base Management is shown in the picture below. 
+   Knowledge Base Management provides efficient heterogeneous descriptive and procedural knowledge access and management services, and the GUI of Knowledge Base Management is shown in the picture below. 
 
 <img src="images/deploy_knowledge.png" style="zoom:70%;" />
 
@@ -117,7 +117,7 @@ We can easily create descriptive and procedural knowledge bases, including Text,
 
 ### System Design and Interaction 
 
-   System Design and Interaction supports the construction, deployment, and user interaction of the K-LLMs system. The interface of System Construction is shown in picture.
+   System Design and Interaction supports the construction, deployment, and user interaction of the K-LLMs system. The GUI of System Construction is shown in picture.
    We offer a rich selection of modular components and several typical enhancement patterns to support convenient construction of mainstream heterogeneous K-LLMs systems. We can construct K-LLMs system by: 
 
    1) Selecting knowledge enhancement pattern, including: Naive, Loop, Adaptive and Iterative;
@@ -132,13 +132,13 @@ We can easily create descriptive and procedural knowledge bases, including Text,
 <img src="images/deploy2-3.png" style="zoom:50%;"/>
 
 
-   After that, we can deploy the K-LLMs system and interact with it. The interface of System(Loop K-LLMs) Deployment and Interaction is shown in the picture below. 
+   After that, we can deploy the K-LLMs system and interact with it. The GUI of System(Loop K-LLMs) Deployment and Interaction is shown in the picture below. 
 
 <img src="images/deploy1.png" style="zoom:60%;" />
 
 ### Task Management and Evaluation 
 
-   Task Management and Evaluation is used for constructing, managing and executing evaluation tasks for the K-LLMs system, and the interface of Task Management and Evaluation is shown in the picture below. Users can:
+   Task Management and Evaluation is used for constructing, managing and executing evaluation tasks for the K-LLMs system, and the GUI of Task Management and Evaluation is shown in the picture below. Users can:
 
    1) Construct evaluation task: create evaluation task, select evaluation dataset & K-LLMs system.
    2) Executing evaluation task: After constructing evaluation task, we can run the evaluation task, and the evaluation results will be presented.
