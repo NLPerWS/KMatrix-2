@@ -251,4 +251,4 @@ Our datasets are available at: **https://www.modelscope.cn/datasets/zhangyujie/K
 
 ## 🔖 License
 
-Apache 2.0 License.
+This project is free for academic use. If you want to use it commercially, please contact us. We reserve all copyrights of this project.
