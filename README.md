@@ -192,19 +192,21 @@ Our datasets are available at: **https://www.modelscope.cn/datasets/zhangyujie/K
 
 |                    | Clutrr | Deer |  Law   | Ulogic | TheoremQA | Clutrr-Fol | Ulogic-Fol | Law-Fol |
 | :----------------: | ------ | :--: | :----: | ------ | --------- | ---------- | ---------- | ------- |
-|        BM25        | 2.67%  | 100% | 70.48% | 86.51% | 44.55%    | 3.82%      | 37.71%     | 58.43%  |
-|         E5         | 9.54%  | 100% | 19.88% | 70.72% | 38.00%    | 10.97%     | 45.30%     | 13.86%  |
 |        BGE         | 4.77%  | 100% | 97.59% | 95.06% | 67.45%    | 4.96%      | 90.72%     | 92.77%  |
 | Self-Induction+BGE | 15.08% | 100% | 98.19% | 98.67% | 80.36%    | 13.55%     | 98.80%     | 97.59%  |
+|        Qwen3         | 3.34%  | 100% | 96.39% | 96.63% | 81.27%    | 3.15%      | 92.41%     | 93.98%  |
+| Self-Induction+Qwen3 | 13.84% | 100% | 98.80% | 98.80% | 84.00%    | 13.07%     | 96.99%     | 98.19%  |
+
 
 **(b) Code knowledge retrieval performance evaluation (Recall@10)**
 
 |                    | Codetrans-Dl | Stackoverflow | Apps   | Codefeedback | Codetrans-Contest | Text2sql | Cosqa  |
 | ------------------ | ------------ | ------------- | ------ | ------------ | ----------------- | -------- | ------ |
-| BM25               | 80.15%       | 56.96%        | 6.89%  | 55.06%       | 53.77%            | 56.89%   | 31.11% |
-| E5                 | 44.44%       | 93.63%        | 16.92% | 52.29%       | 76.02%            | 86.60%   | 57.80% |
-| BGE                | 71.11%       | 71.21%        | 10.84% | 43.69%       | 60.18%            | 82.79%   | 41.20% |
-| Self-Induction+BGE | 56.86%       | 87.98%        | 46.10% | 49.63%       | 70.63%            | 91.76%   | 39.66% |
+| BGE                | 59.44%       | 87.51%        | 41.71% | 48.81%       | 69.25%            | 79.36%   | 41.20% |
+| Self-Induction+BGE | 57.84%       | 87.70%        | 48.12% | 50.36%       | 70.83%            | 92.13%   | 44.02% |
+|        Qwen3         | 77.08%     | 94.19%        | 90.86% | 93.47%       | 93.06%            | 95.58%      | 60.95%  |
+| Self-Induction+Qwen3 | 79.41%     | 94.52%         | 93.19%  | 94.61%       | 93.65%             | 98.18%     | 58.51%  |
+
 
 **(c) Semantic parsing performance of Query Parser (EM)**
 
@@ -237,12 +239,14 @@ Our datasets are available at: **https://www.modelscope.cn/datasets/zhangyujie/K
 
 |                        |     Method     |  Acc   |
 | :--------------------: | :------------: | :----: |
-| CM Conflict Resolution | w/o knowledge  | 14.69% |
-|                        |  w/ knowledge  | 28.59% |
-|                        |    +COIECD     | 66.44% |
-| IC Conflict Resolution | w/o knowledge  | 0.01%  |
-|                        |  w/ knowledge  | 42.70% |
-|                        | +Discriminator | 50.00% |
+| CM Conflict Resolution | w/o knowledge  | 10.00% |
+|                        |  w/ knowledge  | 56.65% |
+|                        |    +COIECD     | 63.98% |
+|                        |    +CAD        | 60.08% |
+| IC Conflict Resolution | w/o knowledge  | 1.00%  |
+|                        |  w/ knowledge  | 21.00% |
+|                        |       +ICL     | 34.90% |
+|                        | +Discriminator | 54.00% |
 
 
 
