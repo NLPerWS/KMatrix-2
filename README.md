@@ -228,11 +228,11 @@ Our datasets are available at: **https://www.modelscope.cn/datasets/zhangyujie/K
 
 **(b) Descriptive & procedural knowledge enhancement performance evaluation on Inferential QA tasks (Acc)**
 
-|       Knowledge        | Clutrr |  Deer  |  Law   | Ulogic | TheoremQA | Clutrr-Fol | Ulogic-Fol | Law-Fol |
-| :--------------------: | :----: | :----: | :----: | :----: | :-------: | :--------: | :--------: | :-----: |
-|        Without         | 25.19% | 85.71% | 27.71% | 11.81% |  53.27%   |   24.81%   |   11.81%   | 27.11%  |
-|      Declarative       | 27.96% | 95.24% | 22.89% | 48.80% |  33.82%   |   28.34%   |   48.55%   | 23.49%  |
-| Declarative+Procedural | 31.97% | 95.24% | 40.96% | 58.43% |  29.27%   |   32.06%   |   58.55%   | 40.96%  |
+|       Knowledge        | Clutrr |  Deer  |  Law   | Ulogic  | Clutrr-Fol | Ulogic-Fol | Law-Fol |
+| :--------------------: | :----: | :----: | :----: | :----:  | :--------: | :--------: | :-----: |
+|        Without         | 25.19% | 85.71% | 27.71% | 11.81% |    24.81%   |   11.81%   | 27.11%  |
+|      Declarative       | 27.96% | 95.24% | 22.89% | 48.80% |    28.34%   |   48.55%   | 23.49%  |
+| Declarative+Procedural | 31.97% | 95.24% | 40.96% | 58.43% |    32.06%   |   58.55%   | 40.96%  |
 
 
 **Knowledge conflict resolution evaluation**
