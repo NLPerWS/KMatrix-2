@@ -15,12 +15,14 @@ We present KMatrix-2, an open-source toolkit that supports comprehensive heterog
 
 3. KMatrix-2 integrates systematic knowledge conflict resolution solutions for better knowledge integration, including inter-context and context-memory conflict resolution.
 
-4. We provide comparative performance results of heterogeneous knowledge access and collaborative enhancement to demonstrate the capabilities of KMatrix-2.
+4. Some key research questions in heterogeneous K-LLMs systems are analyzed, and our toolkit's capability in building such systems is validated.
 
    
 
 ![image](images/manage_v2.1.png)
 
+
+Our **datasets** are available at: https://www.modelscope.cn/datasets/zhangyujie/KMatrix2_Rep/files ( located in the 'datasets/' folder ).
 
 
 ## :wrench: Quick Start
