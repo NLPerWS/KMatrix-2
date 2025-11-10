@@ -258,3 +258,17 @@ Our datasets are available at: **https://www.modelscope.cn/datasets/zhangyujie/K
 ## 🔖 License
 
 This project is free for academic use. If you want to use it commercially, please contact us. We reserve all copyrights of this project.
+
+
+## :dove:  Citing
+If you use KMatrix-2 in your research, please cite:
+
+`````
+@inproceedings{wu2025kmatrix,
+  title={KMatrix-2: A Comprehensive Heterogeneous Knowledge Collaborative Enhancement Toolkit for Large Language Model},
+  author={Wu, Shun and Wu, Di and Sun, Wangtao and Huang, Ziyang and Yuan, Xiaowei and Luo, Kun and Zhang, XueYou and He, Shizhu and Zhao, Jun and Liu, Kang},
+  booktitle={Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing: System Demonstrations},
+  pages={591--601},
+  year={2025}
+}
+`````

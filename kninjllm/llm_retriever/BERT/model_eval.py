@@ -7,7 +7,7 @@ import numpy as np
 from transformers import AutoModel, AutoTokenizer, LlamaModel, T5EncoderModel, T5Config, DPRContextEncoder, DPRContextEncoderTokenizer
 from transformers.modeling_outputs import BaseModelOutput
 from typing import List
-from kninjllm.llm_retriever.BGE.utils_infer import logger, pool, move_to_cuda, create_batch_dict
+from kninjllm.llm_retriever.BERT.utils_infer import logger, pool, move_to_cuda, create_batch_dict
 
 
 class DenseEncoder(torch.nn.Module):

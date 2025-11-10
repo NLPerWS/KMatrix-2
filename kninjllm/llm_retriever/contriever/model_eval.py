@@ -10,7 +10,7 @@ from transformers.modeling_outputs import BaseModelOutput
 from typing import List
 current_path = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(current_path)
-from kninjllm.llm_retriever.BGE.utils_infer import logger, pool, move_to_cuda, create_batch_dict
+from kninjllm.llm_retriever.contriever.utils_infer import logger, pool, move_to_cuda, create_batch_dict
 
 
 class DenseEncoder(torch.nn.Module):

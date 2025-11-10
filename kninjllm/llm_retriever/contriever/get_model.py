@@ -8,7 +8,7 @@ import argparse
 from transformers import AutoModel, AutoTokenizer, T5EncoderModel, T5Config, AutoConfig
 from transformers.modeling_outputs import BaseModelOutput
 from typing import List
-from kninjllm.llm_retriever.BGE.utils_test import logger, pool, move_to_cuda, create_batch_dict
+from kninjllm.llm_retriever.contriever.utils_test import logger, pool, move_to_cuda, create_batch_dict
 
 
 class DenseEncoder(torch.nn.Module):

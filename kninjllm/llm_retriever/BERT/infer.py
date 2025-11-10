@@ -73,7 +73,7 @@ class Args:
         metadata={'help': 'How many neighbors to retrieve?'}
     )
     encoded_embedding_pth: str = field(
-        default=RootConfig.root_path + "kninjllm/llm_retriever/BGE/FaissSave/Bert-base/fiqa_content.memmap",
+        default="",
         metadata={'help': 'Path to save embeddings.'}
     )
     
@@ -90,7 +90,7 @@ class Args:
         metadata={'help': 'relation between corpus and query.'}
     )
     results_dir: str = field(
-        default=RootConfig.root_path + "kninjllm/llm_retriever/BGE/TestResult/Bert-base",
+        default="",
         metadata={'help': 'relation between corpus and query.'}
     )
     corpus_name: str = field(

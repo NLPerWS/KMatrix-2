@@ -22,7 +22,7 @@ class RootConfig:
     knowledgeUploadDirPath = root_path + "dir_knowledge_upload/"
 
     # GPU used in the project
-    CUDA_VISIBLE_DEVICES = "4,5,6,7"
+    CUDA_VISIBLE_DEVICES = "1,2"
     # Server PORT
     SERVER_PORT = "10020"
     
